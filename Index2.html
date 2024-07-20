@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Olympics Quiz</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        color: #333;
+      }
+      header {
+        background: #0033a0;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 5px solid #ffcc00;
+        background-image: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FOlympic_Games&psig=AOvVaw3AD78jAbYEhFBOFcwrnCI3&ust=1721580303244000&source=images&cd=vfe&opi=89978449&ved=0CA4QjRxqFwoTCNCF2quItocDFQAAAAAdAAAAABAW");
+        background-size: cover;
+        background-position: center;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+        padding: 20px;
+      }
+      .section {
+        margin-bottom: 20px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .section h2 {
+        margin-top: 0;
+        color: #0033a0;
+        font-size: 1.8em;
+        border-bottom: 2px solid #ffcc00;
+        padding-bottom: 10px;
+      }
+      .question {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      .question:last-child {
+        border-bottom: none;
+      }
+      .question b {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .question p {
+        margin: 0;
+      }
+      .answer {
+        margin: 5px 0;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 5px;
+        background: #e0e0e0;
+      }
+      .answer:hover {
+        background: #ccc;
+      }
+      .correct {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+      }
+      .incorrect {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+      }
+      .result {
+        font-size: 1.2em;
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .result p {
+        margin: 0 0 10px;
+      }
+      .rating {
+        margin: 20px 0;
+      }
+      .rating label {
+        margin-right: 10px;
+      }
+      footer {
+        background: #0033a0;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        font-size: 0.9em;
+      }
+      .feedback,
+      .register {
+        margin-top: 20px;
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .feedback textarea,
+      .register input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .feedback button,
+      .register button {
+        background-color: #0033a0;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .feedback button:hover,
+      .register button:hover {
+        background-color: #002a80;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Olympics Quiz</h1>
+    </header>
+
+    <div class="container">
+      <div class="section" id="quiz">
+        <h2>Test Your Olympic Knowledge</h2>
+        <div class="question">
+          <b
+            >1. Who holds the record for the most Olympic medals won by a single
+            athlete?</b
+          >
+          <div class="answer" data-correct="true">Michael Phelps</div>
+          <div class="answer">Usain Bolt</div>
+          <div class="answer">Carl Lewis</div>
+          <div class="answer">Mark Spitz</div>
+        </div>
+        <div class="question">
+          <b>2. In which year were the first modern Olympic Games held?</b>
+          <div class="answer">1900</div>
+          <div class="answer" data-correct="true">1896</div>
+          <div class="answer">1912</div>
+          <div class="answer">1924</div>
+        </div>
+        <!-- Add more questions as needed -->
+        <div class="result" id="result" style="display: none">
+          <p id="score"></p>
+          <p id="motivation"></p>
+        </div>
+        <div class="feedback">
+          <h3>Leave Your Feedback</h3>
+          <textarea
+            id="comment"
+            rows="4"
+            placeholder="Your comments here..."
+          ></textarea>
+          <button onclick="submitFeedback()">Submit Feedback</button>
+        </div>
+        <div class="register">
+          <h3>Register to Save Your Score</h3>
+          <input type="text" id="name" placeholder="Enter your name" />
+          <button onclick="register()">Register</button>
+        </div>
+        <div class="rating">
+          <h3>Rate Our Quiz</h3>
+          <label for="rating">Rate:</label>
+          <select id="rating">
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Star</option>
+          </select>
+          <button onclick="submitRating()">Submit Rating</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Quiz created by your friendly assistant. Good luck!</p>
+    </footer>
+
+    <script>
+      let correctAnswers = 0;
+      let totalQuestions = document.querySelectorAll(".question").length;
+      let answeredQuestions = 0;
+
+      document.querySelectorAll(".answer").forEach((answer) => {
+        answer.addEventListener("click", function () {
+          if (answeredQuestions < totalQuestions) {
+            let parentQuestion = this.parentElement;
+            parentQuestion.querySelectorAll(".answer").forEach((ans) => {
+              ans.style.pointerEvents = "none";
+              if (ans.getAttribute("data-correct") === "true") {
+                ans.classList.add("correct");
+              } else {
+                ans.classList.add("incorrect");
+              }
+            });
+
+            if (this.getAttribute("data-correct") === "true") {
+              correctAnswers++;
+            }
+
+            answeredQuestions++;
+
+            if (answeredQuestions === totalQuestions) {
+              showResult();
+            }
+          }
+        });
+      });
+
+      function showResult() {
+        document.getElementById("result").style.display = "block";
+        document.getElementById(
+          "score"
+        ).innerText = `You got ${correctAnswers} out of ${totalQuestions} questions correct!`;
+
+        let motivation = "";
+        if (correctAnswers === totalQuestions) {
+          motivation = "Amazing! You aced the quiz!";
+        } else if (correctAnswers >= totalQuestions / 2) {
+          motivation = "Good job! You have a great knowledge of the Olympics!";
+        } else {
+          motivation = "Nice try! Keep practicing and you’ll get better!";
+        }
+
+        document.getElementById("motivation").innerText = motivation;
+      }
+
+      function submitFeedback() {
+        let comment = document.getElementById("comment").value;
+        if (comment) {
+          alert("Feedback submitted: " + comment);
+          document.getElementById("comment").value = "";
+        } else {
+          alert("Please enter your comments.");
+        }
+      }
+
+      function register() {
+        let name = document.getElementById("name").value;
+        if (name) {
+          alert("Thank you for registering, " + name + "!");
+          document.getElementById("name").value = "";
+        } else {
+          alert("Please enter your name.");
+        }
+      }
+
+      function submitRating() {
+        let rating = document.getElementById("rating").value;
+        alert("Thank you for rating us " + rating + " stars!");
+      }
+    </script>
+  </body>
+</html>
